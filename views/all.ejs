@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Encurtador de Links</title>
+</head>
+<body class="position-relative bg-dark">
+    <div class="card w-50 overflow-auto position-absolute top-0 start-50 translate-middle-x" style="max-height: 700px;">
+        <div class="card-header display-6 d-flex justify-content-between">Links
+          <a href="/">  <button class="btn btn-primary">Novo link</button> </a>
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <% for( let index = 0; index < links.length; index++ ) { %>
+                  <li class="list-group-item d-flex justify-content-between align-items-start" id="<%=links[index].id%>">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold"><h1><%=links[index].title%></h1></div>
+                        <h4 class="text-muted"><%=links[index].description%></h4>
+                        <h4><a href="<%=links[index].url%>"><%=links[index].url%></a></h4>  
+                        <div class="text-info"><i class="material-icons">bar_chart</i>
+                        Clicks: <%=links[index].click%>
+                        </div>                   
+                      </div>
+                        <a href="" onclick="removeLink('<%=links[index].id%>')" class="text-danger" style="text-decoration: none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" id="deletePostBtn" fill="currentColor" class="bi bi-x position-absolute top-0 end-0" viewBox="0 0 16 16">
+                              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                           </svg>
+                          </a>
+                
+                      <button class="btn btn-primary position-absolute end-0 bottom-50">
+                        <a href="/edit/<%=links[index].id%>" class="text-white" style="text-decoration: none;">Editar</a>
+                      </button>
+                      
+                  </li>
+              <% } %>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="../script.js"></script>
+       
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+        function removeLink(id) {
+    fetch("/" + id, { method: "DELETE" }).then((res) => {
+      res.text().then((linkId) => {
+        console.log(`Link: ${id} removido!`);
+        document.getElementById(linkId).remove();
+      });
+    });
+  }
+
+    </script>
+</body>
+</html>
